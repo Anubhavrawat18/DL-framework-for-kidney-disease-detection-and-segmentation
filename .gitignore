@@ -1,0 +1,46 @@
+# Python cache and tooling
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Local configuration and secrets
+.env
+.env.*
+!.env.example
+
+# Datasets and generated model artifacts
+/Kidney Dataset/
+/bbdd_kidney/
+/checkpoints/
+/results/
+/kidney-dataset-comparison/cache/
+/kidney-dataset-comparison/results/
+*.pt
+*.pth
+*.pkl
+
+# Archives and generated exports
+*.zip
+*.tar
+*.tar.gz
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json

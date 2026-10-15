@@ -1,0 +1,116 @@
+%% ---------------------------------------------------------------------------
+%% Figure: lesion-guided pooling
+%%
+%% PREAMBLE (same as the encoder figure -- add once):
+%%   \usepackage{tikz}
+%%   \usetikzlibrary{calc,arrows.meta,decorations.pathreplacing}
+%%
+%% Layout: every node at an explicit (x,y) in cm; no relative positioning.
+%% Disjoint x-channels by construction:
+%%     global-pooling branch   x in [-0.2, 1.8]
+%%     feature re-use channel  x  = 2.40 (line only)
+%%     main column             x in [ 3.3, 7.9]
+%%     loss / annotation       x in [ 8.3, 10.7]
+%% ---------------------------------------------------------------------------
+
+\begin{figure}[t]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[
+  font=\sffamily\footnotesize,
+  main/.style  = {draw, rounded corners=2pt, minimum width=4.6cm,
+                  minimum height=1.0cm, align=center, inner sep=2pt},
+  feat/.style  = {main, fill=orange!14, draw=orange!75!black},
+  les/.style   = {main, fill=blue!12,   draw=blue!60},
+  att/.style   = {main, fill=blue!24,   draw=blue!70},
+  vec/.style   = {main, fill=green!12,  draw=green!45!black},
+  outp/.style  = {main, fill=violet!14, draw=violet!65!black},
+  stop/.style  = {draw=red!65!black, line width=1pt, rounded corners=2pt,
+                  fill=red!12, minimum width=4.6cm, minimum height=0.9cm,
+                  align=center, inner sep=2pt},
+  side/.style  = {draw, rounded corners=2pt, minimum width=2.0cm,
+                  minimum height=1.0cm, align=center, inner sep=2pt,
+                  fill=green!10, draw=green!45!black},
+  loss/.style  = {draw, rounded corners=2pt, minimum width=2.4cm,
+                  minimum height=1.0cm, align=center, inner sep=2pt,
+                  fill=black!5, draw=black!55},
+  note/.style  = {font=\sffamily\scriptsize, text=black!65, align=left},
+  rnote/.style = {font=\sffamily\scriptsize, text=red!55!black, align=left},
+  hdr/.style   = {font=\sffamily\small\bfseries, text=black!80},
+  ar/.style    = {-{Stealth[length=2.4mm]}, semithick, draw=black!65},
+  dash/.style  = {-{Stealth[length=2.4mm]}, semithick, draw=black!55, dashed}
+]
+
+%% ================= main column ============================================
+\node[feat] (m0) at (5.6,   0.00) {Encoder feature map $\mathbf{F}$\\[-1pt]
+                                   {\scriptsize $512 \times 16 \times 16$}};
+\node[les]  (m1) at (5.6,  -1.50) {Lesion decoder};
+\node[les]  (m2) at (5.6,  -2.90) {Lesion logits $\mathbf{L}$\\[-1pt]
+                                   {\scriptsize $512 \times 512$}};
+\node[les]  (m3) at (5.6,  -4.20) {$\sigma(\mathbf{L})$ --- predicted lesion\\[-1pt]
+                                   {\scriptsize probability map}};
+\node[stop] (m4) at (5.6,  -5.40) {\textbf{\textcolor{red!65!black}{STOP-GRADIENT}}\\[-1pt]
+                                   {\scriptsize detach from the computation graph}};
+%% NOTE: keep each math expression on ONE source line. A $...$ group broken
+%% across lines inside a TikZ node can be typeset literally instead of as maths.
+\node[att]  (m5) at (5.6,  -6.80) {Resample to $16\times16$, normalise\\[-1pt]
+                                   {\scriptsize to unit sum $\Rightarrow$ attention $\mathbf{A}$}};
+\node[vec]  (m6) at (5.6,  -8.20) {$\mathbf{v}_{\mathrm{lesion}} = \sum_{h,w} \mathbf{A}_{h,w}\,\mathbf{F}_{:,h,w}$\\[-1pt]
+                                   {\scriptsize $512$-d}};
+\node[vec]  (m7) at (5.6,  -9.80) {$[\,\mathbf{v}_{\mathrm{global}} \,\|\, \mathbf{v}_{\mathrm{lesion}}\,]$\\[-1pt]
+                                   {\scriptsize concatenation, $1024$-d}};
+\node[outp] (m8) at (5.6, -11.20) {Local-pathology head\\[-1pt]
+                                   {\scriptsize linear $1024 \rightarrow 9$ logits}};
+
+\draw[ar] (m0) -- (m1);
+\draw[ar] (m1) -- (m2);
+\draw[ar] (m2) -- (m3);
+\draw[ar] (m3) -- (m4);
+\draw[ar] (m4) -- (m5);
+\draw[ar] (m5) -- (m6);
+\draw[ar] (m6) -- (m7);
+\draw[ar] (m7) -- (m8);
+
+%% ================= global-pooling branch (left) ===========================
+\node[side] (l1) at (0.8, -6.80) {Global average\\pooling};
+\node[side] (l2) at (0.8, -8.20) {$\mathbf{v}_{\text{global}}$\\[-1pt]
+                                  {\scriptsize $512$-d}};
+
+\draw[ar] (3.30, 0.25) -- (0.80, 0.25) -- (0.80, -6.30);
+\draw[ar] (l1) -- (l2);
+\draw[ar] (0.80, -8.70) -- (0.80, -9.80) -- (3.30, -9.80);
+
+%% ================= feature re-use channel =================================
+\draw[dash] (3.30, -0.25) -- (2.40, -0.25) -- (2.40, -8.20) -- (3.30, -8.20);
+\node[note, rotate=90, anchor=south] at (2.22, -4.20)
+      {same $\mathbf{F}$, weighted by $\mathbf{A}$};
+
+%% ================= segmentation loss (right) ==============================
+\node[loss] (dice) at (9.50, -2.90) {Dice loss\\[-1pt]
+                                     {\scriptsize sole supervision}};
+\draw[ar] (7.90, -2.90) -- (dice.west);
+
+%% ================= stop-gradient annotation ===============================
+\node[rnote, anchor=west, text width=2.6cm] at (8.30, -5.40)
+      {No gradient returns from the classification loss to the lesion decoder.};
+
+\node[note, anchor=west, text width=2.6cm] at (8.30, -11.20)
+      {Multi-label output: nine independent sigmoids.};
+
+%% ================= headers ================================================
+\node[hdr] at (5.6, 1.05) {Lesion-guided pooling};
+\node[hdr, text=green!35!black] at (0.8, 1.05) {global branch};
+
+\end{tikzpicture}}
+\caption{Lesion-guided pooling. The multi-label pathology classifier is given localised evidence
+by reusing the lesion decoder's own output as a spatial attention map. The predicted lesion
+probability map is \emph{detached} from the computation graph, resampled to the encoder's spatial
+resolution and normalised to unit sum, yielding attention weights $\mathbf{A}$. These weights
+pool the encoder features into a lesion-focused descriptor
+$\mathbf{v}_{\text{lesion}}$, which is concatenated with the conventional globally averaged
+descriptor $\mathbf{v}_{\text{global}}$ before classification. The stop-gradient is essential:
+without it the classification loss could reshape the lesion decoder to produce convenient
+pseudo-lesions, improving the classifier at the expense of the segmentation output a clinician
+sees. With it, the lesion decoder remains supervised solely by its own Dice term and the
+attention is read-only.}\label{fig:pooling}
+\end{figure}

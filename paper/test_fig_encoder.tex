@@ -1,0 +1,154 @@
+% ===========================================================================
+% STANDALONE TEST FILE -- compile this on its own to preview the figure.
+%
+%   pdflatex test_fig_encoder.tex
+%
+% The page geometry below gives a ~12 cm text width, matching the Springer
+% Nature single-column layout, so \resizebox{\textwidth} scales the figure by
+% the same factor it will in the real manuscript. A wider test page would make
+% the figure look larger than it will on submission.
+%
+% To move this into the manuscript, copy ONLY the \begin{figure} ... \end{figure}
+% block below, and add these two lines to the manuscript preamble:
+%
+%   \usepackage{tikz}
+%   \usetikzlibrary{calc,arrows.meta,decorations.pathreplacing}
+% ===========================================================================
+
+\documentclass[11pt]{article}
+
+% page geometry chosen to mimic the journal's text width
+\usepackage[a4paper,left=4.5cm,right=4.5cm,top=2.5cm,bottom=2.5cm]{geometry}
+
+% maths -- needed for \mathbf, \sum, \sigma, \Rightarrow in the node labels
+\usepackage{amsmath}
+\usepackage{amssymb}
+
+% the figure itself
+\usepackage{graphicx}      % provides \resizebox
+\usepackage{xcolor}        % provides \textcolor (also pulled in by tikz)
+\usepackage{tikz}
+\usetikzlibrary{calc,arrows.meta,decorations.pathreplacing}
+
+\begin{document}
+
+
+\begin{figure}[htbp]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[
+  font=\sffamily\footnotesize,
+  box/.style   = {draw, rounded corners=2pt, minimum width=3.6cm,
+                  minimum height=0.95cm, align=center, inner sep=2pt},
+  io/.style    = {box, fill=orange!14, draw=orange!75!black},
+  stem/.style  = {box, fill=black!6,   draw=black!50},
+  st1/.style   = {box, fill=blue!7,    draw=blue!55},
+  st2/.style   = {box, fill=blue!14,   draw=blue!60},
+  st3/.style   = {box, fill=blue!22,   draw=blue!65},
+  st4/.style   = {box, fill=blue!32,   draw=blue!75},
+  dbox/.style  = {draw, rounded corners=2pt, minimum width=2.4cm,
+                  minimum height=0.85cm, align=center, inner sep=2pt,
+                  fill=black!4, draw=black!50},
+  shape/.style = {font=\sffamily\scriptsize, text=black!70, anchor=west},
+  hdr/.style   = {font=\sffamily\small\bfseries, text=black!80},
+  sub/.style   = {font=\sffamily\scriptsize\itshape, text=black!55},
+  ar/.style    = {-{Stealth[length=2.2mm]}, semithick, draw=black!65},
+  sk/.style    = {-{Stealth[length=2.2mm]}, semithick, draw=black!70}
+]
+
+%% ============ panel (a): encoder chain ====================================
+\node[hdr]   at (1.8, 1.05) {(a) ResNet-34 encoder};
+\node[shape] at (3.9, 1.05) {\bfseries output shape};
+
+\node[io]   (a0) at (1.8,  0.00) {Input ultrasound};
+\node[stem] (a1) at (1.8, -1.30) {conv $7{\times}7$, 64, stride 2\\[-1pt]
+                                  {\scriptsize BN + ReLU \ $\cdot$ \ 9.5\,K}};
+\node[stem] (a2) at (1.8, -2.60) {max-pool $3{\times}3$\\[-1pt]
+                                  {\scriptsize stride 2 \ $\cdot$ \ no parameters}};
+\node[st1]  (a3) at (1.8, -3.90) {\textbf{layer1} \ $3\times$ BasicBlock\\[-1pt]
+                                  {\scriptsize 64 ch, stride 1 \ $\cdot$ \ 222\,K}};
+\node[st2]  (a4) at (1.8, -5.20) {\textbf{layer2} \ $4\times$ BasicBlock\\[-1pt]
+                                  {\scriptsize 128 ch, stride 2 \ $\cdot$ \ 1.12\,M}};
+\node[st3]  (a5) at (1.8, -6.50) {\textbf{layer3} \ $6\times$ BasicBlock\\[-1pt]
+                                  {\scriptsize 256 ch, stride 2 \ $\cdot$ \ 6.82\,M}};
+\node[st4]  (a6) at (1.8, -7.80) {\textbf{layer4} \ $3\times$ BasicBlock\\[-1pt]
+                                  {\scriptsize 512 ch, stride 2 \ $\cdot$ \ 13.11\,M}};
+\node[io]   (a7) at (1.8, -9.10) {Shared feature map\\[-1pt]
+                                  {\scriptsize 21.28\,M parameters total}};
+
+\draw[ar] (a0) -- (a1);
+\draw[ar] (a1) -- (a2);
+\draw[ar] (a2) -- (a3);
+\draw[ar] (a3) -- (a4);
+\draw[ar] (a4) -- (a5);
+\draw[ar] (a5) -- (a6);
+\draw[ar] (a6) -- (a7);
+
+\node[shape] at (3.9,  0.00) {$512{\times}512{\times}3$};
+\node[shape] at (3.9, -1.30) {$256{\times}256{\times}64$};
+\node[shape] at (3.9, -2.60) {$128{\times}128{\times}64$};
+\node[shape] at (3.9, -3.90) {$128{\times}128{\times}64$};
+\node[shape] at (3.9, -5.20) {$64{\times}64{\times}128$};
+\node[shape] at (3.9, -6.50) {$32{\times}32{\times}256$};
+\node[shape] at (3.9, -7.80) {$16{\times}16{\times}512$};
+\node[shape] at (3.9, -9.10) {$16{\times}16{\times}512$};
+
+%% downsampling brace, left of the boxes
+\draw[decorate, decoration={brace, amplitude=5pt, mirror}, black!55]
+      (-0.20, -0.825) -- (-0.20, -8.275);
+\node[font=\sffamily\scriptsize, text=black!65, rotate=90]
+      at (-0.62, -4.55) {cumulative downsampling $\times 32$};
+
+\node[sub, anchor=west, text width=5.6cm] at (0.0, -10.15)
+      {Classifier and global pooling of the original network are removed;
+       layer3 and layer4 hold 94\% of the parameters.};
+
+%% ============ panel (b): BasicBlock =======================================
+\node[hdr] at (8.6, 1.05) {(b) BasicBlock};
+
+\node[dbox] (b0) at (8.6, -0.10) {input $\mathbf{x}$};
+\node[dbox] (b1) at (8.6, -1.45) {conv $3{\times}3$, stride $s$};
+\node[dbox] (b2) at (8.6, -2.80) {BN + ReLU};
+\node[dbox] (b3) at (8.6, -4.15) {conv $3{\times}3$, stride 1};
+\node[dbox] (b4) at (8.6, -5.50) {BN};
+\node[circle, draw=black!65, fill=black!6, minimum size=0.42cm, inner sep=0]
+            (b5) at (8.6, -6.75) {$+$};
+\node[dbox] (b6) at (8.6, -7.95) {ReLU};
+\node[dbox] (b7) at (8.6, -9.25) {output};
+
+\draw[ar] (b0) -- (b1);
+\draw[ar] (b1) -- (b2);
+\draw[ar] (b2) -- (b3);
+\draw[ar] (b3) -- (b4);
+\draw[ar] (b4) -- (b5);
+\draw[ar] (b5) -- (b6);
+\draw[ar] (b6) -- (b7);
+
+%% identity shortcut: right-hand channel, x = 10.3
+\draw[sk] (9.80, -0.10) -- (10.30, -0.10) -- (10.30, -6.75) -- (8.81, -6.75);
+\node[font=\sffamily\scriptsize, text=black!65, rotate=-90]
+      at (10.62, -3.40) {identity shortcut ($s=1$)};
+
+%% projection shortcut: left-hand channel, x = 6.9
+\draw[sk, dashed, draw=red!60!black]
+      (7.40, -0.10) -- (6.90, -0.10) -- (6.90, -6.75) -- (8.39, -6.75);
+\node[font=\sffamily\scriptsize, text=red!55!black, rotate=90]
+      at (6.58, -3.40) {conv $1{\times}1$, stride 2 + BN};
+
+\node[sub, anchor=west, text width=4.4cm, align=left] at (6.40, -10.15)
+      {Dashed path replaces the identity in the first block of layer2,
+       layer3 and layer4 only.};
+
+\end{tikzpicture}}
+\caption{The shared ResNet-34 encoder. \textbf{(a)}~A strided $7{\times}7$ convolution and a
+max-pool reduce resolution fourfold before four residual stages of 3, 4, 6 and 3 BasicBlocks;
+each stage after the first halves the spatial extent and doubles the channel count, for a
+cumulative downsampling factor of 32. The original classifier and global pooling are removed, so
+the encoder emits a $16{\times}16{\times}512$ feature map rather than a class vector. Capacity is
+concentrated at the coarsest scales: layer3 and layer4 together hold 19.94\,M of the encoder's
+21.28\,M parameters. \textbf{(b)}~Structure of a BasicBlock. Within a stage the residual path is
+an identity shortcut; in the first block of layer2, layer3 and layer4, where resolution and width
+both change, it is replaced by a $1{\times}1$ strided convolution with batch
+normalisation.}\label{fig:encoder}
+\end{figure}
+\end{document}

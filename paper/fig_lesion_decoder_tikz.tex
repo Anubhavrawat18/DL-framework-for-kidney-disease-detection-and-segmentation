@@ -1,0 +1,86 @@
+\begin{figure}[t]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[
+  font=\sffamily\footnotesize,
+  blk/.style   = {draw, rounded corners=2pt, minimum width=6.0cm,
+                  minimum height=1.05cm, align=center, inner sep=2pt},
+  io/.style    = {blk, fill=orange!14, draw=orange!75!black},
+  up/.style    = {blk, fill=blue!12, draw=blue!65!black},
+  fin/.style   = {blk, fill=violet!13, draw=violet!65!black},
+  post/.style  = {blk, fill=black!6, draw=black!55},
+  cons/.style  = {draw, rounded corners=2pt, minimum width=4.4cm,
+                  minimum height=1.25cm, align=center, inner sep=3pt,
+                  font=\sffamily\scriptsize},
+  loss/.style  = {cons, fill=red!8, draw=red!55!black},
+  metric/.style= {cons, fill=blue!9, draw=blue!55},
+  attn/.style  = {cons, fill=green!12, draw=green!45!black},
+  gt/.style    = {cons, fill=black!6, draw=black!55, minimum height=1.0cm},
+  shape/.style = {font=\sffamily\scriptsize, text=black!70, anchor=west},
+  hdr/.style   = {font=\sffamily\small\bfseries, text=black!80},
+  note/.style  = {font=\sffamily\scriptsize, text=black!60, align=left},
+  ar/.style    = {-{Stealth[length=2.4mm]}, semithick, draw=black!65},
+  busar/.style = {-{Stealth[length=2.4mm]}, semithick, draw=black!60},
+  gtar/.style  = {-{Stealth[length=2.2mm]}, semithick, draw=black!55, dashed},
+  sk/.style    = {-{Stealth[length=2.4mm]}, semithick, draw=green!40!black}
+]
+
+%% ---------------- main column: the decoder itself
+\node[hdr]   at (3.2, 1.15) {(b) Lesion decoder};
+\node[shape] at (6.4, 1.15) {\bfseries output shape};
+
+\node[io]  (d0) at (3.2,   0.00) {Shared encoder feature map};
+\node[up]  (d1) at (3.2,  -1.45) {Up-block 1 \ \ $512 \rightarrow 256$\\[-1pt]{\scriptsize 1{,}180{,}416 parameters}};
+\node[up]  (d2) at (3.2,  -2.90) {Up-block 2 \ \ $256 \rightarrow 128$\\[-1pt]{\scriptsize 295{,}296 parameters}};
+\node[up]  (d3) at (3.2,  -4.35) {Up-block 3 \ \ $128 \rightarrow 64$\\[-1pt]{\scriptsize 73{,}920 parameters}};
+\node[up]  (d4) at (3.2,  -5.80) {Up-block 4 \ \ $64 \rightarrow 32$\\[-1pt]{\scriptsize 18{,}528 parameters}};
+\node[up]  (d5) at (3.2,  -7.25) {Up-block 5 \ \ $32 \rightarrow 16$\\[-1pt]{\scriptsize 4{,}656 parameters}};
+\node[fin] (d6) at (3.2,  -8.70) {Conv $1{\times}1$, \ $16 \rightarrow 1$\\[-1pt]{\scriptsize 17 parameters \ $\cdot$ \ no normalisation, no activation}};
+\node[io]  (d7) at (3.2, -10.15) {Dense logit map \ \ {\scriptsize(raw logits, squeezed to one channel)}};
+\node[post](d8) at (3.2, -11.60) {$\sigma(\cdot)$, threshold $0.5$ $\Rightarrow$ predicted binary mask};
+
+\draw[ar] (d0) -- (d1);
+\draw[ar] (d1) -- (d2);
+\draw[ar] (d2) -- (d3);
+\draw[ar] (d3) -- (d4);
+\draw[ar] (d4) -- (d5);
+\draw[ar] (d5) -- (d6);
+\draw[ar] (d6) -- (d7);
+\draw[ar] (d7) -- (d8);
+
+\node[shape] at (6.4,   0.00) {$512 \times 16 \times 16$};
+\node[shape] at (6.4,  -1.45) {$256 \times 32 \times 32$};
+\node[shape] at (6.4,  -2.90) {$128 \times 64 \times 64$};
+\node[shape] at (6.4,  -4.35) {$64 \times 128 \times 128$};
+\node[shape] at (6.4,  -5.80) {$32 \times 256 \times 256$};
+\node[shape] at (6.4,  -7.25) {$16 \times 512 \times 512$};
+\node[shape] at (6.4,  -8.70) {$1 \times 512 \times 512$};
+\node[shape] at (6.4, -10.15) {$512 \times 512$};
+
+\draw[decorate, decoration={brace, amplitude=5pt, mirror}, black!55]
+      (0.00, -0.925) -- (0.00, -7.775);
+\node[font=\sffamily\scriptsize, text=black!65, rotate=90]
+      at (-0.40, -4.35) {five $2\times$ upsamplings, total $\times 32$};
+
+\node[note, anchor=north west, text width=6.2cm] at (0.20, -12.35)
+      {Total 1{,}572{,}833 parameters. The first up-block alone holds 75\% of them, being the only one that operates on 512 input channels.};
+
+%% ---------------- right panel: supervision and consumers
+\node[hdr] at (11.8, 1.15) {Supervision and consumers};
+\node[loss] (lloss) at (11.8,  -3.20) {\textbf{Soft Dice loss} (training)\\[-1pt]against the rasterised lesion boxes};
+\node[loss] (lcons) at (11.8,  -5.60) {\textbf{Anatomical consistency}\\[-1pt]lesion mass outside the kidney ground truth};
+\node[attn] (latt) at (11.8,  -8.00) {\textbf{Lesion-guided pooling}\\[-1pt]$\sigma(\cdot)$, \textsc{detach}, pool, normalise};
+\node[metric] (lmet) at (11.8, -10.40) {\textbf{Lesion Dice and violation rate}\\[-1pt]reported overall and on lesion-bearing images};
+
+%% bus from the logit map up and down to each consumer
+\draw[busar] (6.20, -10.15) -- (8.90, -10.15) -- (8.90,  -3.20) -- (lloss.west);
+\draw[busar] (6.20, -10.15) -- (8.90, -10.15) -- (8.90,  -5.60) -- (lcons.west);
+\draw[sk] (6.20, -10.15) -- (8.90, -10.15) -- (8.90,  -8.00) -- (latt.west);
+\draw[busar] (6.20, -10.15) -- (8.90, -10.15) -- (8.90, -10.40) -- (lmet.west);
+
+\node[note, anchor=north west, text width=4.6cm] at (9.60, -12.35)
+      {The green path is detached, so the pathology classification loss can read this map but cannot reshape it. The Dice target is a union of rasterised bounding boxes, not a traced contour, so reported lesion Dice understates true localisation.};
+
+\end{tikzpicture}}
+\caption{The lesion segmentation decoder. Structurally this head is identical to the kidney decoder and holds the same 1,572,833 parameters; what differs is its supervision and its downstream use. Its logits are supervised by a soft Dice loss against a union of rasterised lesion bounding boxes, and additionally by the anatomical consistency term, which penalises predicted lesion probability mass falling outside the ground-truth kidney region. Beyond the loss, the same logits are passed through a sigmoid and \emph{detached} to form the spatial attention map used by lesion-guided pooling, so the multi-label pathology classifier reads localised evidence without being able to alter the segmentation it reads.}\label{fig:lesion-decoder}
+\end{figure}

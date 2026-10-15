@@ -1,0 +1,1502 @@
+{
+ "setup": {
+  "gpu": "NVIDIA GeForce RTX 3050 Laptop GPU",
+  "vram_gb": 4.29,
+  "torch": "2.14.0+cu126",
+  "n_images": 1985,
+  "n_labels": 1985,
+  "n_masks": 1985,
+  "splits": {
+   "train": 1389,
+   "val": 298,
+   "test": 298
+  },
+  "peak_vram_MultiTaskNet": 0.7,
+  "params_MultiTaskNet": 22859044,
+  "peak_vram_MultiTaskNetV2": 0.81,
+  "params_MultiTaskNetV2": 24436494,
+  "s_per_sample": 0.0503,
+  "est_epoch_min": 1.26,
+  "est_15epoch_hours": 0.32
+ },
+ "verify": {
+  "phase2_baseline_best.pt": {
+   "local": {
+    "diagnosis_auc": 0.9000959079283888,
+    "global_pathology_mean_auc": 0.7518532595009895,
+    "local_pathology_mean_auc": 0.5,
+    "kidney_dice": 0.8733106851577759,
+    "lesion_dice": 0.3187919557094574,
+    "lesion_dice_positive_only": 5.204111586110116e-10,
+    "n_lesion_positive": 203,
+    "consistency_violation_rate": 0.0,
+    "n_samples": 298
+   },
+   "colab_reported": {
+    "diagnosis_auc": 0.9003,
+    "kidney_dice": 0.8735
+   }
+  },
+  "phase3_enhanced_best.pt": {
+   "local": {
+    "diagnosis_auc": 0.8706841432225063,
+    "global_pathology_mean_auc": 0.8123678907963319,
+    "local_pathology_mean_auc": 0.5,
+    "kidney_dice": 0.8888688087463379,
+    "lesion_dice": 0.3187919557094574,
+    "lesion_dice_positive_only": 5.204111586110116e-10,
+    "n_lesion_positive": 203,
+    "consistency_violation_rate": 0.0,
+    "n_samples": 298
+   },
+   "colab_reported": {
+    "diagnosis_auc": 0.8712,
+    "kidney_dice": 0.8891
+   }
+  },
+  "phase4_multitask_best.pt": {
+   "local": {
+    "diagnosis_auc": 0.8880434782608696,
+    "global_pathology_mean_auc": 0.798521227793578,
+    "local_pathology_mean_auc": 0.7722980127846325,
+    "kidney_dice": 0.896409809589386,
+    "lesion_dice": 0.341096967458725,
+    "lesion_dice_positive_only": 0.5007235407829285,
+    "n_lesion_positive": 203,
+    "consistency_violation_rate": 0.25722748041152954,
+    "n_samples": 298
+   },
+   "colab_reported": {
+    "diagnosis_auc": 0.888,
+    "kidney_dice": 0.8966,
+    "lesion_dice": 0.3388,
+    "local_pathology_mean_auc": 0.7724
+   }
+  },
+  "phase5_anatomical_best.pt": {
+   "local": {
+    "diagnosis_auc": 0.8772378516624041,
+    "global_pathology_mean_auc": 0.8030595951811246,
+    "local_pathology_mean_auc": 0.7607178312640562,
+    "kidney_dice": 0.8969833254814148,
+    "lesion_dice": 0.34489408135414124,
+    "lesion_dice_positive_only": 0.5013715624809265,
+    "n_lesion_positive": 203,
+    "consistency_violation_rate": 0.3786138892173767,
+    "n_samples": 298
+   },
+   "colab_reported": {
+    "diagnosis_auc": 0.8758,
+    "kidney_dice": 0.897,
+    "lesion_dice": 0.3425,
+    "consistency_violation_rate": 0.379
+   }
+  }
+ },
+ "phase2": {
+  "test": {
+   "diagnosis_auc": 0.9012787723785166,
+   "global_pathology_mean_auc": 0.8037529503904439,
+   "local_pathology_mean_auc": 0.5,
+   "kidney_dice": 0.8990598320960999,
+   "lesion_dice": 0.3187919557094574,
+   "lesion_dice_positive_only": 5.204111586110116e-10,
+   "consistency_violation_rate": 0.0,
+   "n_lesion_positive": 203,
+   "n_samples": 298
+  },
+  "history": [
+   {
+    "epoch": 1,
+    "train_loss": 1.7902237139214043,
+    "val_diagnosis_auc": 0.6927699166505137,
+    "val_kidney_dice": 0.6087625026702881,
+    "val_lesion_dice": 0.3590604066848755,
+    "val_lesion_dice_positive_only": 4.0255565547653305e-10,
+    "val_consistency_violation_rate": 0.0,
+    "elapsed_s": 128.68565607070923
+   },
+   {
+    "epoch": 2,
+    "train_loss": 1.6157343680488652,
+    "val_diagnosis_auc": 0.8732312463655748,
+    "val_kidney_dice": 0.8081172108650208,
+    "val_lesion_dice": 0.3590604066848755,
+    "val_lesion_dice_positive_only": 4.0255565547653305e-10,
+    "val_consistency_violation_rate": 0.0,
+    "elapsed_s": 38.94502329826355
+   },
+   {
+    "epoch": 3,
+    "train_loss": 1.402935921289455,
+    "val_diagnosis_auc": 0.8617626154939588,
+    "val_kidney_dice": 0.8385894298553467,
+    "val_lesion_dice": 0.3590604066848755,
+    "val_lesion_dice_positive_only": 4.0255565547653305e-10,
+    "val_consistency_violation_rate": 0.0,
+    "elapsed_s": 39.47162127494812
+   },
+   {
+    "epoch": 4,
+    "train_loss": 1.1962804751492095,
+    "val_diagnosis_auc": 0.8584674032435227,
+    "val_kidney_dice": 0.8486719727516174,
+    "val_lesion_dice": 0.3590604066848755,
+    "val_lesion_dice_positive_only": 4.0255565547653305e-10,
+    "val_consistency_violation_rate": 0.0,
+    "elapsed_s": 39.20813703536987
+   },
+   {
+    "epoch": 5,
+    "train_loss": 0.9948907429459452,
+    "val_diagnosis_auc": 0.8095561155262647,
+    "val_kidney_dice": 0.8314626812934875,
+    "val_lesion_dice": 0.3590604066848755,
+    "val_lesion_dice_positive_only": 4.0255565547653305e-10,
+    "val_consistency_violation_rate": 0.0,
+    "elapsed_s": 39.110804080963135
+   },
+   {
+    "epoch": 6,
+    "train_loss": 0.8197296650587828,
+    "val_diagnosis_auc": 0.8516185307230083,
+    "val_kidney_dice": 0.8578638434410095,
+    "val_lesion_dice": 0.3590604066848755,
+    "val_lesion_dice_positive_only": 4.0255565547653305e-10,
+    "val_consistency_violation_rate": 0.0,
+    "elapsed_s": 39.138845920562744
+   },
+   {
+    "epoch": 7,
+    "train_loss": 0.6255878970540804,
+    "val_diagnosis_auc": 0.8917102797699811,
+    "val_kidney_dice": 0.862891674041748,
+    "val_lesion_dice": 0.3590604066848755,
+    "val_lesion_dice_positive_only": 4.0255565547653305e-10,
+    "val_consistency_violation_rate": 0.0,
+    "elapsed_s": 39.632108211517334
+   },
+   {
+    "epoch": 8,
+    "train_loss": 0.502198661324279,
+    "val_diagnosis_auc": 0.8892873295858371,
+    "val_kidney_dice": 0.876453161239624,
+    "val_lesion_dice": 0.3590604066848755,
+    "val_lesion_dice_positive_only": 4.0255565547653305e-10,
+    "val_consistency_violation_rate": 0.0,
+    "elapsed_s": 39.67526078224182
+   },
+   {
+    "epoch": 9,
+    "train_loss": 0.47455380711404754,
+    "val_diagnosis_auc": 0.8580151192091491,
+    "val_kidney_dice": 0.854387104511261,
+    "val_lesion_dice": 0.3590604066848755,
+    "val_lesion_dice_positive_only": 4.0255565547653305e-10,
+    "val_consistency_violation_rate": 0.0,
+    "elapsed_s": 39.351938247680664
+   },
+   {
+    "epoch": 10,
+    "train_loss": 0.37101744162454003,
+    "val_diagnosis_auc": 0.855366027007818,
+    "val_kidney_dice": 0.8882423639297485,
+    "val_lesion_dice": 0.3590604066848755,
+    "val_lesion_dice_positive_only": 4.0255565547653305e-10,
+    "val_consistency_violation_rate": 0.0,
+    "elapsed_s": 38.28834414482117
+   },
+   {
+    "epoch": 11,
+    "train_loss": 0.297415884018972,
+    "val_diagnosis_auc": 0.8641209536731924,
+    "val_kidney_dice": 0.882117748260498,
+    "val_lesion_dice": 0.3590604066848755,
+    "val_lesion_dice_positive_only": 4.0255565547653305e-10,
+    "val_consistency_violation_rate": 0.0,
+    "elapsed_s": 40.038363218307495
+   },
+   {
+    "epoch": 12,
+    "train_loss": 0.2745735689612298,
+    "val_diagnosis_auc": 0.8899334496349421,
+    "val_kidney_dice": 0.8882340788841248,
+    "val_lesion_dice": 0.3590604066848755,
+    "val_lesion_dice_positive_only": 4.0255565547653305e-10,
+    "val_consistency_violation_rate": 0.0,
+    "elapsed_s": 38.86662435531616
+   },
+   {
+    "epoch": 13,
+    "train_loss": 0.24003922738049221,
+    "val_diagnosis_auc": 0.8443173741681205,
+    "val_kidney_dice": 0.884209930896759,
+    "val_lesion_dice": 0.3590604066848755,
+    "val_lesion_dice_positive_only": 4.0255565547653305e-10,
+    "val_consistency_violation_rate": 0.0,
+    "elapsed_s": 38.53026247024536
+   },
+   {
+    "epoch": 14,
+    "train_loss": 0.20162717895261173,
+    "val_diagnosis_auc": 0.9003682884279899,
+    "val_kidney_dice": 0.8954846858978271,
+    "val_lesion_dice": 0.3590604066848755,
+    "val_lesion_dice_positive_only": 4.0255565547653305e-10,
+    "val_consistency_violation_rate": 0.0,
+    "elapsed_s": 40.07945132255554
+   },
+   {
+    "epoch": 15,
+    "train_loss": 0.1816969799498717,
+    "val_diagnosis_auc": 0.8737158364024036,
+    "val_kidney_dice": 0.8776189684867859,
+    "val_lesion_dice": 0.3590604066848755,
+    "val_lesion_dice_positive_only": 4.0255565547653305e-10,
+    "val_consistency_violation_rate": 0.0,
+    "elapsed_s": 39.80825471878052
+   }
+  ],
+  "local_aucs": {
+   "0": 0.5,
+   "1": 0.5,
+   "2": 0.5,
+   "3": 0.5,
+   "4": 0.5,
+   "5": 0.5,
+   "6": 0.5,
+   "7": 0.5,
+   "8": 0.5
+  }
+ },
+ "phase3": {
+  "test": {
+   "diagnosis_auc": 0.8902813299232737,
+   "global_pathology_mean_auc": 0.7801786060297542,
+   "local_pathology_mean_auc": 0.5,
+   "kidney_dice": 0.9020758271217346,
+   "lesion_dice": 0.3187919557094574,
+   "lesion_dice_positive_only": 5.204111586110116e-10,
+   "consistency_violation_rate": 0.0,
+   "n_lesion_positive": 203,
+   "n_samples": 298
+  },
+  "history": [
+   {
+    "epoch": 1,
+    "train_loss": 1.8180519373252475,
+    "val_diagnosis_auc": 0.6374297344446598,
+    "val_kidney_dice": 0.7141238451004028,
+    "val_lesion_dice": 0.3590604066848755,
+    "val_lesion_dice_positive_only": 4.0255565547653305e-10,
+    "val_consistency_violation_rate": 0.0,
+    "elapsed_s": 67.48763298988342
+   },
+   {
+    "epoch": 2,
+    "train_loss": 1.6281435462250107,
+    "val_diagnosis_auc": 0.8431543580797312,
+    "val_kidney_dice": 0.7500913739204407,
+    "val_lesion_dice": 0.3590604066848755,
+    "val_lesion_dice_positive_only": 4.0255565547653305e-10,
+    "val_consistency_violation_rate": 0.0,
+    "elapsed_s": 65.0738513469696
+   },
+   {
+    "epoch": 3,
+    "train_loss": 1.4438990596039543,
+    "val_diagnosis_auc": 0.7996381727725012,
+    "val_kidney_dice": 0.7985332012176514,
+    "val_lesion_dice": 0.3590604066848755,
+    "val_lesion_dice_positive_only": 4.0255565547653305e-10,
+    "val_consistency_violation_rate": 0.0,
+    "elapsed_s": 65.75518250465393
+   },
+   {
+    "epoch": 4,
+    "train_loss": 1.2372742704618935,
+    "val_diagnosis_auc": 0.8047425211604317,
+    "val_kidney_dice": 0.8089403510093689,
+    "val_lesion_dice": 0.3590604066848755,
+    "val_lesion_dice_positive_only": 4.0255565547653305e-10,
+    "val_consistency_violation_rate": 0.0,
+    "elapsed_s": 65.66169738769531
+   },
+   {
+    "epoch": 5,
+    "train_loss": 1.0529478312223808,
+    "val_diagnosis_auc": 0.8617626154939588,
+    "val_kidney_dice": 0.8621729612350464,
+    "val_lesion_dice": 0.3590604066848755,
+    "val_lesion_dice_positive_only": 4.0255565547653305e-10,
+    "val_consistency_violation_rate": 0.0,
+    "elapsed_s": 65.66334104537964
+   },
+   {
+    "epoch": 6,
+    "train_loss": 0.8328730461412462,
+    "val_diagnosis_auc": 0.9071525489435937,
+    "val_kidney_dice": 0.8561086654663086,
+    "val_lesion_dice": 0.3590604066848755,
+    "val_lesion_dice_positive_only": 4.0255565547653305e-10,
+    "val_consistency_violation_rate": 0.0,
+    "elapsed_s": 66.29264307022095
+   },
+   {
+    "epoch": 7,
+    "train_loss": 0.6555966342232008,
+    "val_diagnosis_auc": 0.8596627253343672,
+    "val_kidney_dice": 0.8490091562271118,
+    "val_lesion_dice": 0.3590604066848755,
+    "val_lesion_dice_positive_only": 4.0255565547653305e-10,
+    "val_consistency_violation_rate": 0.0,
+    "elapsed_s": 65.41614556312561
+   },
+   {
+    "epoch": 8,
+    "train_loss": 0.5234476162613123,
+    "val_diagnosis_auc": 0.867577695935905,
+    "val_kidney_dice": 0.8590630888938904,
+    "val_lesion_dice": 0.3590604066848755,
+    "val_lesion_dice_positive_only": 4.0255565547653305e-10,
+    "val_consistency_violation_rate": 0.0,
+    "elapsed_s": 64.74833083152771
+   },
+   {
+    "epoch": 9,
+    "train_loss": 0.4402942345317068,
+    "val_diagnosis_auc": 0.8646055437100214,
+    "val_kidney_dice": 0.8805482387542725,
+    "val_lesion_dice": 0.3590604066848755,
+    "val_lesion_dice_positive_only": 4.0255565547653305e-10,
+    "val_consistency_violation_rate": 0.0,
+    "elapsed_s": 65.36587047576904
+   },
+   {
+    "epoch": 10,
+    "train_loss": 0.39317022670788326,
+    "val_diagnosis_auc": 0.8519738967500163,
+    "val_kidney_dice": 0.8718919157981873,
+    "val_lesion_dice": 0.3590604066848755,
+    "val_lesion_dice_positive_only": 4.0255565547653305e-10,
+    "val_consistency_violation_rate": 0.0,
+    "elapsed_s": 65.05686378479004
+   },
+   {
+    "epoch": 11,
+    "train_loss": 0.3259185269560622,
+    "val_diagnosis_auc": 0.8752019125153453,
+    "val_kidney_dice": 0.8873107433319092,
+    "val_lesion_dice": 0.3590604066848755,
+    "val_lesion_dice_positive_only": 4.0255565547653305e-10,
+    "val_consistency_violation_rate": 0.0,
+    "elapsed_s": 65.31710028648376
+   },
+   {
+    "epoch": 12,
+    "train_loss": 0.28525178596891204,
+    "val_diagnosis_auc": 0.8611811074497642,
+    "val_kidney_dice": 0.8738462924957275,
+    "val_lesion_dice": 0.3590604066848755,
+    "val_lesion_dice_positive_only": 4.0255565547653305e-10,
+    "val_consistency_violation_rate": 0.0,
+    "elapsed_s": 65.8834137916565
+   },
+   {
+    "epoch": 13,
+    "train_loss": 0.20561683843790116,
+    "val_diagnosis_auc": 0.8670607998966208,
+    "val_kidney_dice": 0.8863335847854614,
+    "val_lesion_dice": 0.3590604066848755,
+    "val_lesion_dice_positive_only": 4.0255565547653305e-10,
+    "val_consistency_violation_rate": 0.0,
+    "elapsed_s": 72.03501772880554
+   },
+   {
+    "epoch": 14,
+    "train_loss": 0.17847991420020318,
+    "val_diagnosis_auc": 0.8750080765006137,
+    "val_kidney_dice": 0.8932185769081116,
+    "val_lesion_dice": 0.3590604066848755,
+    "val_lesion_dice_positive_only": 4.0255565547653305e-10,
+    "val_consistency_violation_rate": 0.0,
+    "elapsed_s": 68.7990984916687
+   },
+   {
+    "epoch": 15,
+    "train_loss": 0.14807193685622735,
+    "val_diagnosis_auc": 0.8711636622084384,
+    "val_kidney_dice": 0.8946791291236877,
+    "val_lesion_dice": 0.3590604066848755,
+    "val_lesion_dice_positive_only": 4.0255565547653305e-10,
+    "val_consistency_violation_rate": 0.0,
+    "elapsed_s": 66.41477084159851
+   }
+  ],
+  "local_aucs": {
+   "0": 0.5,
+   "1": 0.5,
+   "2": 0.5,
+   "3": 0.5,
+   "4": 0.5,
+   "5": 0.5,
+   "6": 0.5,
+   "7": 0.5,
+   "8": 0.5
+  }
+ },
+ "phase4": {
+  "test": {
+   "diagnosis_auc": 0.8995204603580563,
+   "global_pathology_mean_auc": 0.8011540249274058,
+   "local_pathology_mean_auc": 0.7703874362845503,
+   "kidney_dice": 0.892784595489502,
+   "lesion_dice": 0.34444981813430786,
+   "lesion_dice_positive_only": 0.5056455135345459,
+   "consistency_violation_rate": 0.23313094675540924,
+   "n_lesion_positive": 203,
+   "n_samples": 298
+  },
+  "history": [
+   {
+    "epoch": 1,
+    "train_loss": 3.091835549508018,
+    "val_diagnosis_auc": 0.7735995347935646,
+    "val_kidney_dice": 0.5992327332496643,
+    "val_lesion_dice": 0.13453418016433716,
+    "val_lesion_dice_positive_only": 0.20990154147148132,
+    "val_consistency_violation_rate": 0.0,
+    "elapsed_s": 96.08988070487976
+   },
+   {
+    "epoch": 2,
+    "train_loss": 2.9201412495525405,
+    "val_diagnosis_auc": 0.7943722943722944,
+    "val_kidney_dice": 0.6295254826545715,
+    "val_lesion_dice": 0.19969068467617035,
+    "val_lesion_dice_positive_only": 0.3115593194961548,
+    "val_consistency_violation_rate": 0.10994286835193634,
+    "elapsed_s": 42.93341374397278
+   },
+   {
+    "epoch": 3,
+    "train_loss": 2.732162462568831,
+    "val_diagnosis_auc": 0.8484202364799379,
+    "val_kidney_dice": 0.7364383935928345,
+    "val_lesion_dice": 0.23574143648147583,
+    "val_lesion_dice_positive_only": 0.3678060472011566,
+    "val_consistency_violation_rate": 0.18369132280349731,
+    "elapsed_s": 42.98139476776123
+   },
+   {
+    "epoch": 4,
+    "train_loss": 2.5208571762189096,
+    "val_diagnosis_auc": 0.8533953608580475,
+    "val_kidney_dice": 0.7931299805641174,
+    "val_lesion_dice": 0.2488977015018463,
+    "val_lesion_dice_positive_only": 0.3883325457572937,
+    "val_consistency_violation_rate": 0.29779478907585144,
+    "elapsed_s": 43.05102181434631
+   },
+   {
+    "epoch": 5,
+    "train_loss": 2.290129799952452,
+    "val_diagnosis_auc": 0.8586935452607095,
+    "val_kidney_dice": 0.835114061832428,
+    "val_lesion_dice": 0.22155249118804932,
+    "val_lesion_dice_positive_only": 0.3456682562828064,
+    "val_consistency_violation_rate": 0.21870683133602142,
+    "elapsed_s": 43.18344736099243
+   },
+   {
+    "epoch": 6,
+    "train_loss": 2.024198863355593,
+    "val_diagnosis_auc": 0.900755960457453,
+    "val_kidney_dice": 0.8520810008049011,
+    "val_lesion_dice": 0.29568663239479065,
+    "val_lesion_dice_positive_only": 0.46133309602737427,
+    "val_consistency_violation_rate": 0.3044327199459076,
+    "elapsed_s": 43.09920811653137
+   },
+   {
+    "epoch": 7,
+    "train_loss": 1.7728926087247914,
+    "val_diagnosis_auc": 0.8930671318731019,
+    "val_kidney_dice": 0.8663488626480103,
+    "val_lesion_dice": 0.29666927456855774,
+    "val_lesion_dice_positive_only": 0.4628661870956421,
+    "val_consistency_violation_rate": 0.176207035779953,
+    "elapsed_s": 43.14054226875305
+   },
+   {
+    "epoch": 8,
+    "train_loss": 1.5622041516605465,
+    "val_diagnosis_auc": 0.8975253602119273,
+    "val_kidney_dice": 0.8693225979804993,
+    "val_lesion_dice": 0.31708866357803345,
+    "val_lesion_dice_positive_only": 0.49472472071647644,
+    "val_consistency_violation_rate": 0.3469729423522949,
+    "elapsed_s": 43.13779330253601
+   },
+   {
+    "epoch": 9,
+    "train_loss": 1.4459245710194797,
+    "val_diagnosis_auc": 0.8907087936938682,
+    "val_kidney_dice": 0.8713341951370239,
+    "val_lesion_dice": 0.3250579833984375,
+    "val_lesion_dice_positive_only": 0.5071585774421692,
+    "val_consistency_violation_rate": 0.2520167827606201,
+    "elapsed_s": 43.14857006072998
+   },
+   {
+    "epoch": 10,
+    "train_loss": 1.308645269994078,
+    "val_diagnosis_auc": 0.8800478128836338,
+    "val_kidney_dice": 0.8750313520431519,
+    "val_lesion_dice": 0.3413269817829132,
+    "val_lesion_dice_positive_only": 0.5325415134429932,
+    "val_consistency_violation_rate": 0.2720196545124054,
+    "elapsed_s": 43.20791172981262
+   },
+   {
+    "epoch": 11,
+    "train_loss": 1.2188788940166604,
+    "val_diagnosis_auc": 0.8651870517542158,
+    "val_kidney_dice": 0.872069776058197,
+    "val_lesion_dice": 0.30931755900382996,
+    "val_lesion_dice_positive_only": 0.48260024189949036,
+    "val_consistency_violation_rate": 0.3000190258026123,
+    "elapsed_s": 43.21149015426636
+   },
+   {
+    "epoch": 12,
+    "train_loss": 1.2009035996321975,
+    "val_diagnosis_auc": 0.8749757704981586,
+    "val_kidney_dice": 0.8736609220504761,
+    "val_lesion_dice": 0.3419334590435028,
+    "val_lesion_dice_positive_only": 0.5282521843910217,
+    "val_consistency_violation_rate": 0.2811020612716675,
+    "elapsed_s": 43.17325830459595
+   },
+   {
+    "epoch": 13,
+    "train_loss": 1.0543028309770015,
+    "val_diagnosis_auc": 0.8918071977773471,
+    "val_kidney_dice": 0.8898184299468994,
+    "val_lesion_dice": 0.34605857729911804,
+    "val_lesion_dice_positive_only": 0.5399238467216492,
+    "val_consistency_violation_rate": 0.16958677768707275,
+    "elapsed_s": 43.207549810409546
+   },
+   {
+    "epoch": 14,
+    "train_loss": 0.9461785900866848,
+    "val_diagnosis_auc": 0.895716224074433,
+    "val_kidney_dice": 0.8912802338600159,
+    "val_lesion_dice": 0.35756716132164,
+    "val_lesion_dice_positive_only": 0.547408401966095,
+    "val_consistency_violation_rate": 0.2552209794521332,
+    "elapsed_s": 43.17302870750427
+   },
+   {
+    "epoch": 15,
+    "train_loss": 0.9001727007415102,
+    "val_diagnosis_auc": 0.8671577179039865,
+    "val_kidney_dice": 0.8850064873695374,
+    "val_lesion_dice": 0.33441632986068726,
+    "val_lesion_dice_positive_only": 0.5112882852554321,
+    "val_consistency_violation_rate": 0.24881426990032196,
+    "elapsed_s": 43.18768382072449
+   }
+  ],
+  "local_aucs": {
+   "0": 0.7620146097654749,
+   "1": 0.800148740831923,
+   "2": 0.9128472222222221,
+   "3": 0.8282619907168643,
+   "4": 0.6215986394557823,
+   "5": 0.7787162162162163,
+   "6": 0.9470122152525586,
+   "7": 0.692770092226614,
+   "8": 0.5901171998732975
+  }
+ },
+ "phase5": {
+  "test": {
+   "diagnosis_auc": 0.879124040920716,
+   "global_pathology_mean_auc": 0.8004174021996335,
+   "local_pathology_mean_auc": 0.7752152525233384,
+   "kidney_dice": 0.8838458061218262,
+   "lesion_dice": 0.35175347328186035,
+   "lesion_dice_positive_only": 0.48681047558784485,
+   "consistency_violation_rate": 0.2816984951496124,
+   "n_lesion_positive": 203,
+   "n_samples": 298
+  },
+  "history": [
+   {
+    "epoch": 1,
+    "train_loss": 3.4018160598031404,
+    "val_diagnosis_auc": 0.7845189636234414,
+    "val_kidney_dice": 0.590879499912262,
+    "val_lesion_dice": 0.20018070936203003,
+    "val_lesion_dice_positive_only": 0.31232380867004395,
+    "val_consistency_violation_rate": 0.0,
+    "elapsed_s": 95.56736660003662
+   },
+   {
+    "epoch": 2,
+    "train_loss": 3.1658363102496354,
+    "val_diagnosis_auc": 0.8425728500355366,
+    "val_kidney_dice": 0.6588037610054016,
+    "val_lesion_dice": 0.24140018224716187,
+    "val_lesion_dice_positive_only": 0.3766348361968994,
+    "val_consistency_violation_rate": 0.0,
+    "elapsed_s": 42.96548581123352
+   },
+   {
+    "epoch": 3,
+    "train_loss": 2.917907017400895,
+    "val_diagnosis_auc": 0.8529753828261291,
+    "val_kidney_dice": 0.7653272151947021,
+    "val_lesion_dice": 0.2613552510738373,
+    "val_lesion_dice_positive_only": 0.40776896476745605,
+    "val_consistency_violation_rate": 0.5376050472259521,
+    "elapsed_s": 43.07204341888428
+   },
+   {
+    "epoch": 4,
+    "train_loss": 2.6627519051919037,
+    "val_diagnosis_auc": 0.8710344381986173,
+    "val_kidney_dice": 0.7732049226760864,
+    "val_lesion_dice": 0.2608589828014374,
+    "val_lesion_dice_positive_only": 0.40699464082717896,
+    "val_consistency_violation_rate": 0.7025727033615112,
+    "elapsed_s": 43.072962522506714
+   },
+   {
+    "epoch": 5,
+    "train_loss": 2.406704565574383,
+    "val_diagnosis_auc": 0.8239968986237642,
+    "val_kidney_dice": 0.8460919260978699,
+    "val_lesion_dice": 0.2872801125049591,
+    "val_lesion_dice_positive_only": 0.44821715354919434,
+    "val_consistency_violation_rate": 0.6865395903587341,
+    "elapsed_s": 43.1680645942688
+   },
+   {
+    "epoch": 6,
+    "train_loss": 2.1457298613827804,
+    "val_diagnosis_auc": 0.8784002067584157,
+    "val_kidney_dice": 0.8448030352592468,
+    "val_lesion_dice": 0.2942531704902649,
+    "val_lesion_dice_positive_only": 0.4486254155635834,
+    "val_consistency_violation_rate": 0.6459941267967224,
+    "elapsed_s": 43.25506258010864
+   },
+   {
+    "epoch": 7,
+    "train_loss": 1.8685266214540635,
+    "val_diagnosis_auc": 0.8987852943076823,
+    "val_kidney_dice": 0.8615238070487976,
+    "val_lesion_dice": 0.2907673716545105,
+    "val_lesion_dice_positive_only": 0.45365798473358154,
+    "val_consistency_violation_rate": 0.5482126474380493,
+    "elapsed_s": 43.30238127708435
+   },
+   {
+    "epoch": 8,
+    "train_loss": 1.7003331163833881,
+    "val_diagnosis_auc": 0.8528461588163081,
+    "val_kidney_dice": 0.8655804991722107,
+    "val_lesion_dice": 0.3095993101596832,
+    "val_lesion_dice_positive_only": 0.4830397367477417,
+    "val_consistency_violation_rate": 0.5139566659927368,
+    "elapsed_s": 43.11047840118408
+   },
+   {
+    "epoch": 9,
+    "train_loss": 1.5467498977293914,
+    "val_diagnosis_auc": 0.881340052981844,
+    "val_kidney_dice": 0.8811926245689392,
+    "val_lesion_dice": 0.3198554515838623,
+    "val_lesion_dice_positive_only": 0.49904152750968933,
+    "val_consistency_violation_rate": 0.4271756112575531,
+    "elapsed_s": 43.44018054008484
+   },
+   {
+    "epoch": 10,
+    "train_loss": 1.3682024864287212,
+    "val_diagnosis_auc": 0.8995929443690639,
+    "val_kidney_dice": 0.8787261247634888,
+    "val_lesion_dice": 0.3241121768951416,
+    "val_lesion_dice_positive_only": 0.5056828260421753,
+    "val_consistency_violation_rate": 0.4001306891441345,
+    "elapsed_s": 43.25016784667969
+   },
+   {
+    "epoch": 11,
+    "train_loss": 1.2456732164511735,
+    "val_diagnosis_auc": 0.8715513342379014,
+    "val_kidney_dice": 0.8823037147521973,
+    "val_lesion_dice": 0.3699827790260315,
+    "val_lesion_dice_positive_only": 0.53013014793396,
+    "val_consistency_violation_rate": 0.4576384127140045,
+    "elapsed_s": 43.236963510513306
+   },
+   {
+    "epoch": 12,
+    "train_loss": 1.2016185167534599,
+    "val_diagnosis_auc": 0.8497447825806035,
+    "val_kidney_dice": 0.8724274039268494,
+    "val_lesion_dice": 0.3438270688056946,
+    "val_lesion_dice_positive_only": 0.525970995426178,
+    "val_consistency_violation_rate": 0.33850395679473877,
+    "elapsed_s": 43.27272963523865
+   },
+   {
+    "epoch": 13,
+    "train_loss": 1.1176493739944764,
+    "val_diagnosis_auc": 0.8605026813982037,
+    "val_kidney_dice": 0.8837822079658508,
+    "val_lesion_dice": 0.3483712375164032,
+    "val_lesion_dice_positive_only": 0.5382964611053467,
+    "val_consistency_violation_rate": 0.19712507724761963,
+    "elapsed_s": 43.256044149398804
+   },
+   {
+    "epoch": 14,
+    "train_loss": 1.0319278277884956,
+    "val_diagnosis_auc": 0.8960069780965303,
+    "val_kidney_dice": 0.8928925395011902,
+    "val_lesion_dice": 0.3626463711261749,
+    "val_lesion_dice_positive_only": 0.5343906283378601,
+    "val_consistency_violation_rate": 0.2771618366241455,
+    "elapsed_s": 43.143415689468384
+   },
+   {
+    "epoch": 15,
+    "train_loss": 0.95152756100756,
+    "val_diagnosis_auc": 0.8907734056987788,
+    "val_kidney_dice": 0.8898277282714844,
+    "val_lesion_dice": 0.36783671379089355,
+    "val_lesion_dice_positive_only": 0.5372530817985535,
+    "val_consistency_violation_rate": 0.24821843206882477,
+    "elapsed_s": 43.240214586257935
+   }
+  ],
+  "local_aucs": {
+   "0": 0.7820069204152249,
+   "1": 0.8036364568908038,
+   "2": 0.8527777777777777,
+   "3": 0.8043665119477393,
+   "4": 0.7193877551020409,
+   "5": 0.9543918918918919,
+   "6": 0.9232089798613404,
+   "7": 0.6427042160737814,
+   "8": 0.4944567627494457
+  }
+ },
+ "phase5b": {
+  "test": {
+   "diagnosis_auc": 0.9014066496163682,
+   "global_pathology_mean_auc": 0.793186621518494,
+   "local_pathology_mean_auc": 0.7416276711944285,
+   "kidney_dice": 0.8954128623008728,
+   "lesion_dice": 0.3324962556362152,
+   "lesion_dice_positive_only": 0.4880979061126709,
+   "consistency_violation_rate": 0.05433392524719238,
+   "n_lesion_positive": 203,
+   "n_samples": 298
+  },
+  "history": [
+   {
+    "epoch": 1,
+    "train_loss": 3.9167651671102677,
+    "val_diagnosis_auc": 0.8153065839633005,
+    "val_kidney_dice": 0.5994123220443726,
+    "val_lesion_dice": 0.137123703956604,
+    "val_lesion_dice_positive_only": 0.21394166350364685,
+    "val_consistency_violation_rate": 0.04330351576209068,
+    "elapsed_s": 95.1274299621582
+   },
+   {
+    "epoch": 2,
+    "train_loss": 3.6415807899387405,
+    "val_diagnosis_auc": 0.7976998126251856,
+    "val_kidney_dice": 0.49984732270240784,
+    "val_lesion_dice": 0.17639000713825226,
+    "val_lesion_dice_positive_only": 0.2752053737640381,
+    "val_consistency_violation_rate": 0.2853052616119385,
+    "elapsed_s": 43.027689933776855
+   },
+   {
+    "epoch": 3,
+    "train_loss": 3.349898814469918,
+    "val_diagnosis_auc": 0.8471926083866383,
+    "val_kidney_dice": 0.5126555562019348,
+    "val_lesion_dice": 0.2312827706336975,
+    "val_lesion_dice_positive_only": 0.3608495891094208,
+    "val_consistency_violation_rate": 0.27249088883399963,
+    "elapsed_s": 43.16272187232971
+   },
+   {
+    "epoch": 4,
+    "train_loss": 3.04497677224806,
+    "val_diagnosis_auc": 0.8515539187180977,
+    "val_kidney_dice": 0.6623357534408569,
+    "val_lesion_dice": 0.22237063944339752,
+    "val_lesion_dice_positive_only": 0.34694474935531616,
+    "val_consistency_violation_rate": 0.2704062759876251,
+    "elapsed_s": 43.28890514373779
+   },
+   {
+    "epoch": 5,
+    "train_loss": 2.7787532217201147,
+    "val_diagnosis_auc": 0.8939070879369385,
+    "val_kidney_dice": 0.7671492695808411,
+    "val_lesion_dice": 0.2640587091445923,
+    "val_lesion_dice_positive_only": 0.4119868576526642,
+    "val_consistency_violation_rate": 0.23956629633903503,
+    "elapsed_s": 43.21642279624939
+   },
+   {
+    "epoch": 6,
+    "train_loss": 2.4895291694964485,
+    "val_diagnosis_auc": 0.8815985010014861,
+    "val_kidney_dice": 0.8579404950141907,
+    "val_lesion_dice": 0.25812485814094543,
+    "val_lesion_dice_positive_only": 0.4027288258075714,
+    "val_consistency_violation_rate": 0.25577446818351746,
+    "elapsed_s": 43.32897210121155
+   },
+   {
+    "epoch": 7,
+    "train_loss": 2.1660027479988404,
+    "val_diagnosis_auc": 0.8692576080635783,
+    "val_kidney_dice": 0.861671507358551,
+    "val_lesion_dice": 0.25609105825424194,
+    "val_lesion_dice_positive_only": 0.3995557129383087,
+    "val_consistency_violation_rate": 0.24841810762882233,
+    "elapsed_s": 43.253082036972046
+   },
+   {
+    "epoch": 8,
+    "train_loss": 1.9719532669960766,
+    "val_diagnosis_auc": 0.8771725786651159,
+    "val_kidney_dice": 0.8824673891067505,
+    "val_lesion_dice": 0.2702622413635254,
+    "val_lesion_dice_positive_only": 0.4216657280921936,
+    "val_consistency_violation_rate": 0.2811034023761749,
+    "elapsed_s": 43.204153537750244
+   },
+   {
+    "epoch": 9,
+    "train_loss": 1.6655690279500237,
+    "val_diagnosis_auc": 0.876914130645474,
+    "val_kidney_dice": 0.8761900067329407,
+    "val_lesion_dice": 0.27363017201423645,
+    "val_lesion_dice_positive_only": 0.4269203841686249,
+    "val_consistency_violation_rate": 0.19863542914390564,
+    "elapsed_s": 43.38698124885559
+   },
+   {
+    "epoch": 10,
+    "train_loss": 1.5108171953209515,
+    "val_diagnosis_auc": 0.8996898623764295,
+    "val_kidney_dice": 0.8881850242614746,
+    "val_lesion_dice": 0.2928827404975891,
+    "val_lesion_dice_positive_only": 0.45695847272872925,
+    "val_consistency_violation_rate": 0.15990962088108063,
+    "elapsed_s": 43.2301766872406
+   },
+   {
+    "epoch": 11,
+    "train_loss": 1.3853825632183032,
+    "val_diagnosis_auc": 0.899011436324869,
+    "val_kidney_dice": 0.8842452168464661,
+    "val_lesion_dice": 0.3024371564388275,
+    "val_lesion_dice_positive_only": 0.47186529636383057,
+    "val_consistency_violation_rate": 0.13073082268238068,
+    "elapsed_s": 43.297998666763306
+   },
+   {
+    "epoch": 12,
+    "train_loss": 1.2602579422380733,
+    "val_diagnosis_auc": 0.8839568391807198,
+    "val_kidney_dice": 0.8929169774055481,
+    "val_lesion_dice": 0.3020310699939728,
+    "val_lesion_dice_positive_only": 0.47123175859451294,
+    "val_consistency_violation_rate": 0.09869743138551712,
+    "elapsed_s": 43.321205377578735
+   },
+   {
+    "epoch": 13,
+    "train_loss": 1.147413112993898,
+    "val_diagnosis_auc": 0.8806293209278283,
+    "val_kidney_dice": 0.8903597593307495,
+    "val_lesion_dice": 0.3141396939754486,
+    "val_lesion_dice_positive_only": 0.4901237189769745,
+    "val_consistency_violation_rate": 0.08136869966983795,
+    "elapsed_s": 43.27594709396362
+   },
+   {
+    "epoch": 14,
+    "train_loss": 1.1236053883344277,
+    "val_diagnosis_auc": 0.8724559023066486,
+    "val_kidney_dice": 0.8825375437736511,
+    "val_lesion_dice": 0.3179779052734375,
+    "val_lesion_dice_positive_only": 0.49611207842826843,
+    "val_consistency_violation_rate": 0.07311331480741501,
+    "elapsed_s": 43.27669024467468
+   },
+   {
+    "epoch": 15,
+    "train_loss": 1.051463085344468,
+    "val_diagnosis_auc": 0.8770756606577501,
+    "val_kidney_dice": 0.8930760622024536,
+    "val_lesion_dice": 0.34362828731536865,
+    "val_lesion_dice_positive_only": 0.5361321568489075,
+    "val_consistency_violation_rate": 0.05769997090101242,
+    "elapsed_s": 43.338618755340576
+   }
+  ],
+  "local_aucs": {
+   "0": 0.746635909265667,
+   "1": 0.8202543981125302,
+   "2": 0.8534722222222222,
+   "3": 0.7637957710159876,
+   "4": 0.5986394557823129,
+   "5": 0.9577702702702702,
+   "6": 0.9134037636183561,
+   "7": 0.5952733860342556,
+   "8": 0.42540386442825473
+  }
+ },
+ "phase6_final": {
+  "test": {
+   "diagnosis_auc": 0.8752557544757033,
+   "global_pathology_mean_auc": 0.7254592470158627,
+   "local_pathology_mean_auc": 0.7313935329571262,
+   "kidney_dice": 0.9080910682678223,
+   "lesion_dice": 0.2847256362438202,
+   "lesion_dice_positive_only": 0.4179716408252716,
+   "consistency_violation_rate": 0.05451409891247749,
+   "n_lesion_positive": 203,
+   "n_samples": 298
+  },
+  "history": [
+   {
+    "epoch": 1,
+    "train_loss": 8.33465328983877,
+    "val_diagnosis_auc": 0.7174840085287848,
+    "val_kidney_dice": 0.5209342241287231,
+    "val_lesion_dice": 0.14101196825504303,
+    "val_lesion_dice_positive_only": 0.22000820934772491,
+    "val_consistency_violation_rate": 0.3579162061214447,
+    "elapsed_s": 75.22245979309082
+   },
+   {
+    "epoch": 2,
+    "train_loss": 7.604368629126713,
+    "val_diagnosis_auc": 0.8051948051948052,
+    "val_kidney_dice": 0.3260463774204254,
+    "val_lesion_dice": 0.20992474257946014,
+    "val_lesion_dice_positive_only": 0.3275265395641327,
+    "val_consistency_violation_rate": 0.1447724997997284,
+    "elapsed_s": 72.93674683570862
+   },
+   {
+    "epoch": 3,
+    "train_loss": 7.012059874918269,
+    "val_diagnosis_auc": 0.8392776377851006,
+    "val_kidney_dice": 0.6039859652519226,
+    "val_lesion_dice": 0.2348112314939499,
+    "val_lesion_dice_positive_only": 0.36635470390319824,
+    "val_consistency_violation_rate": 0.23681671917438507,
+    "elapsed_s": 73.54250884056091
+   },
+   {
+    "epoch": 4,
+    "train_loss": 6.442112704803204,
+    "val_diagnosis_auc": 0.8714544162305355,
+    "val_kidney_dice": 0.5980484485626221,
+    "val_lesion_dice": 0.1925010234117508,
+    "val_lesion_dice_positive_only": 0.3003419041633606,
+    "val_consistency_violation_rate": 0.2299915850162506,
+    "elapsed_s": 73.60777473449707
+   },
+   {
+    "epoch": 5,
+    "train_loss": 5.814481033675972,
+    "val_diagnosis_auc": 0.8423467080183498,
+    "val_kidney_dice": 0.7500793933868408,
+    "val_lesion_dice": 0.22733713686466217,
+    "val_lesion_dice_positive_only": 0.3546935021877289,
+    "val_consistency_violation_rate": 0.31751301884651184,
+    "elapsed_s": 73.56030607223511
+   },
+   {
+    "epoch": 6,
+    "train_loss": 5.156310954313168,
+    "val_diagnosis_auc": 0.8626671835627059,
+    "val_kidney_dice": 0.6753544211387634,
+    "val_lesion_dice": 0.2055419683456421,
+    "val_lesion_dice_positive_only": 0.32068851590156555,
+    "val_consistency_violation_rate": 0.21025510132312775,
+    "elapsed_s": 73.3874990940094
+   },
+   {
+    "epoch": 7,
+    "train_loss": 4.622316887323883,
+    "val_diagnosis_auc": 0.8412806099373265,
+    "val_kidney_dice": 0.8440189361572266,
+    "val_lesion_dice": 0.24090668559074402,
+    "val_lesion_dice_positive_only": 0.37586480379104614,
+    "val_consistency_violation_rate": 0.1734720915555954,
+    "elapsed_s": 73.65793657302856
+   },
+   {
+    "epoch": 8,
+    "train_loss": 4.24175482577291,
+    "val_diagnosis_auc": 0.8542676229243392,
+    "val_kidney_dice": 0.8652469515800476,
+    "val_lesion_dice": 0.23712867498397827,
+    "val_lesion_dice_positive_only": 0.3699703812599182,
+    "val_consistency_violation_rate": 0.13251416385173798,
+    "elapsed_s": 73.82803082466125
+   },
+   {
+    "epoch": 9,
+    "train_loss": 3.7776353523649018,
+    "val_diagnosis_auc": 0.8742973444465981,
+    "val_kidney_dice": 0.892950177192688,
+    "val_lesion_dice": 0.25174087285995483,
+    "val_lesion_dice_positive_only": 0.392768532037735,
+    "val_consistency_violation_rate": 0.17821234464645386,
+    "elapsed_s": 74.0046775341034
+   },
+   {
+    "epoch": 10,
+    "train_loss": 3.275783704957743,
+    "val_diagnosis_auc": 0.891936421787168,
+    "val_kidney_dice": 0.8957953453063965,
+    "val_lesion_dice": 0.25626927614212036,
+    "val_lesion_dice_positive_only": 0.39983370900154114,
+    "val_consistency_violation_rate": 0.20839954912662506,
+    "elapsed_s": 74.48332929611206
+   },
+   {
+    "epoch": 11,
+    "train_loss": 2.6418995305724526,
+    "val_diagnosis_auc": 0.8697745041028623,
+    "val_kidney_dice": 0.8985046744346619,
+    "val_lesion_dice": 0.2571580708026886,
+    "val_lesion_dice_positive_only": 0.401220440864563,
+    "val_consistency_violation_rate": 0.14308105409145355,
+    "elapsed_s": 73.92644000053406
+   },
+   {
+    "epoch": 12,
+    "train_loss": 2.2407691972009065,
+    "val_diagnosis_auc": 0.8833430251340699,
+    "val_kidney_dice": 0.905470073223114,
+    "val_lesion_dice": 0.2635636329650879,
+    "val_lesion_dice_positive_only": 0.4112144708633423,
+    "val_consistency_violation_rate": 0.10527227818965912,
+    "elapsed_s": 74.41691732406616
+   },
+   {
+    "epoch": 13,
+    "train_loss": 1.9653632250325432,
+    "val_diagnosis_auc": 0.8937132519222071,
+    "val_kidney_dice": 0.9068073034286499,
+    "val_lesion_dice": 0.27621012926101685,
+    "val_lesion_dice_positive_only": 0.43094566464424133,
+    "val_consistency_violation_rate": 0.07858610153198242,
+    "elapsed_s": 74.0281298160553
+   },
+   {
+    "epoch": 14,
+    "train_loss": 1.793318797802103,
+    "val_diagnosis_auc": 0.9081217290172515,
+    "val_kidney_dice": 0.9001113772392273,
+    "val_lesion_dice": 0.29111209511756897,
+    "val_lesion_dice_positive_only": 0.4541958272457123,
+    "val_consistency_violation_rate": 0.07371119409799576,
+    "elapsed_s": 74.08105897903442
+   },
+   {
+    "epoch": 15,
+    "train_loss": 1.667719259001743,
+    "val_diagnosis_auc": 0.8626348775602507,
+    "val_kidney_dice": 0.905531108379364,
+    "val_lesion_dice": 0.3004785180091858,
+    "val_lesion_dice_positive_only": 0.46880942583084106,
+    "val_consistency_violation_rate": 0.05530746653676033,
+    "elapsed_s": 74.00822830200195
+   }
+  ],
+  "local_aucs": null
+ },
+ "search": {
+  "winner": "COA",
+  "fitness_weights": {
+   "diagnosis_auc": 0.3,
+   "local_pathology_mean_auc": 0.15,
+   "kidney_dice": 0.25,
+   "lesion_dice_positive_only": 0.25,
+   "consistency": 0.05
+  },
+  "search_space": {
+   "diagnosis": [
+    0.1,
+    5.0
+   ],
+   "global_pathology": [
+    0.1,
+    5.0
+   ],
+   "local_pathology": [
+    0.1,
+    5.0
+   ],
+   "kidney_seg": [
+    0.1,
+    5.0
+   ],
+   "lesion_seg": [
+    0.1,
+    5.0
+   ],
+   "consistency": [
+    0.1,
+    5.0
+   ],
+   "clahe_clip_limit": [
+    1.0,
+    5.0
+   ],
+   "clahe_tile_grid_size": [
+    4.0,
+    16.0
+   ],
+   "denoise_h": [
+    0.0,
+    20.0
+   ],
+   "gamma": [
+    0.5,
+    2.0
+   ]
+  },
+  "fidelity": {
+   "img_size": 256,
+   "epochs": 3,
+   "batch_size": 16
+  },
+  "results": {
+   "COA": {
+    "best_fitness": 0.6079800379996253,
+    "loss_weights": {
+     "diagnosis": 0.1,
+     "global_pathology": 0.1,
+     "local_pathology": 3.9756370471166864,
+     "kidney_seg": 3.055203538806138,
+     "lesion_seg": 1.544430968495654,
+     "consistency": 4.186699137130036
+    },
+    "enhancement": {
+     "clahe_clip_limit": 3.3979136874673843,
+     "clahe_tile_grid_size": 13,
+     "denoise_h": 0.718890776872132,
+     "gamma": 0.7635978212656418
+    },
+    "n_evaluations": 60,
+    "hours": 1.973,
+    "curve": [
+     -0.5496253023053257,
+     -0.5551794632081788,
+     -0.5594796773447459,
+     -0.5594796773447459,
+     -0.5594796773447459,
+     -0.5920924360877482,
+     -0.5920924360877482,
+     -0.5920924360877482,
+     -0.5920924360877482,
+     -0.5920924360877482,
+     -0.5920924360877482,
+     -0.5920924360877482,
+     -0.5920924360877482,
+     -0.5920924360877482,
+     -0.5920924360877482,
+     -0.5920924360877482,
+     -0.5920924360877482,
+     -0.5920924360877482,
+     -0.5920924360877482,
+     -0.5920924360877482,
+     -0.5920924360877482,
+     -0.5920924360877482,
+     -0.5920924360877482,
+     -0.5920924360877482,
+     -0.5920924360877482,
+     -0.5920924360877482,
+     -0.5920924360877482,
+     -0.5920924360877482,
+     -0.5920924360877482,
+     -0.5920924360877482,
+     -0.5961103460599111,
+     -0.5961103460599111,
+     -0.5961103460599111,
+     -0.5961103460599111,
+     -0.5961103460599111,
+     -0.6079800379996253,
+     -0.6079800379996253,
+     -0.6079800379996253,
+     -0.6079800379996253,
+     -0.6079800379996253,
+     -0.6079800379996253,
+     -0.6079800379996253,
+     -0.6079800379996253,
+     -0.6079800379996253,
+     -0.6079800379996253,
+     -0.6079800379996253,
+     -0.6079800379996253,
+     -0.6079800379996253,
+     -0.6079800379996253,
+     -0.6079800379996253,
+     -0.6079800379996253,
+     -0.6079800379996253,
+     -0.6079800379996253,
+     -0.6079800379996253,
+     -0.6079800379996253,
+     -0.6079800379996253,
+     -0.6079800379996253,
+     -0.6079800379996253,
+     -0.6079800379996253,
+     -0.6079800379996253
+    ]
+   },
+   "WOA": {
+    "best_fitness": 0.5982833453884641,
+    "loss_weights": {
+     "diagnosis": 0.3404474530111947,
+     "global_pathology": 0.10798490134291715,
+     "local_pathology": 4.392092900648746,
+     "kidney_seg": 2.6511196674845006,
+     "lesion_seg": 2.050547983292799,
+     "consistency": 0.1
+    },
+    "enhancement": {
+     "clahe_clip_limit": 2.5741119968456463,
+     "clahe_tile_grid_size": 16,
+     "denoise_h": 1.9137196425544758,
+     "gamma": 0.7873237756611651
+    },
+    "n_evaluations": 60,
+    "hours": 1.73,
+    "curve": [
+     -0.5496253023053257,
+     -0.5551794632081788,
+     -0.5594796773447459,
+     -0.5594796773447459,
+     -0.5594796773447459,
+     -0.5920924360877482,
+     -0.5920924360877482,
+     -0.5920924360877482,
+     -0.5920924360877482,
+     -0.5920924360877482,
+     -0.5920924360877482,
+     -0.5920924360877482,
+     -0.5920924360877482,
+     -0.5920924360877482,
+     -0.5920924360877482,
+     -0.5920924360877482,
+     -0.5920924360877482,
+     -0.5920924360877482,
+     -0.5920924360877482,
+     -0.5920924360877482,
+     -0.5920924360877482,
+     -0.5920924360877482,
+     -0.5920924360877482,
+     -0.5920924360877482,
+     -0.5920924360877482,
+     -0.5920924360877482,
+     -0.5920924360877482,
+     -0.5920924360877482,
+     -0.5920924360877482,
+     -0.5920924360877482,
+     -0.5920924360877482,
+     -0.5920924360877482,
+     -0.5957805756920945,
+     -0.5957805756920945,
+     -0.5957805756920945,
+     -0.5957805756920945,
+     -0.5957805756920945,
+     -0.5957805756920945,
+     -0.5957805756920945,
+     -0.5957805756920945,
+     -0.5957805756920945,
+     -0.5957805756920945,
+     -0.5957805756920945,
+     -0.5957805756920945,
+     -0.5957805756920945,
+     -0.5957805756920945,
+     -0.5957805756920945,
+     -0.5957805756920945,
+     -0.5957805756920945,
+     -0.5957805756920945,
+     -0.5957805756920945,
+     -0.5982833453884641,
+     -0.5982833453884641,
+     -0.5982833453884641,
+     -0.5982833453884641,
+     -0.5982833453884641,
+     -0.5982833453884641,
+     -0.5982833453884641,
+     -0.5982833453884641,
+     -0.5982833453884641
+    ]
+   },
+   "GWO": {
+    "best_fitness": 0.6006393800203479,
+    "loss_weights": {
+     "diagnosis": 2.899576588792751,
+     "global_pathology": 1.7830150987097042,
+     "local_pathology": 5.0,
+     "kidney_seg": 5.0,
+     "lesion_seg": 2.1036849745243478,
+     "consistency": 1.1483341608138582
+    },
+    "enhancement": {
+     "clahe_clip_limit": 5.0,
+     "clahe_tile_grid_size": 10,
+     "denoise_h": 9.312261577137916,
+     "gamma": 0.5353866417852614
+    },
+    "n_evaluations": 60,
+    "hours": 1.94,
+    "curve": [
+     -0.5496253023053257,
+     -0.5551794632081788,
+     -0.5594796773447459,
+     -0.5594796773447459,
+     -0.5594796773447459,
+     -0.5920924360877482,
+     -0.5920924360877482,
+     -0.5920924360877482,
+     -0.5920924360877482,
+     -0.5920924360877482,
+     -0.5920924360877482,
+     -0.5953000793774745,
+     -0.5953000793774745,
+     -0.5953000793774745,
+     -0.5953000793774745,
+     -0.5953000793774745,
+     -0.5953000793774745,
+     -0.6006393800203479,
+     -0.6006393800203479,
+     -0.6006393800203479,
+     -0.6006393800203479,
+     -0.6006393800203479,
+     -0.6006393800203479,
+     -0.6006393800203479,
+     -0.6006393800203479,
+     -0.6006393800203479,
+     -0.6006393800203479,
+     -0.6006393800203479,
+     -0.6006393800203479,
+     -0.6006393800203479,
+     -0.6006393800203479,
+     -0.6006393800203479,
+     -0.6006393800203479,
+     -0.6006393800203479,
+     -0.6006393800203479,
+     -0.6006393800203479,
+     -0.6006393800203479,
+     -0.6006393800203479,
+     -0.6006393800203479,
+     -0.6006393800203479,
+     -0.6006393800203479,
+     -0.6006393800203479,
+     -0.6006393800203479,
+     -0.6006393800203479,
+     -0.6006393800203479,
+     -0.6006393800203479,
+     -0.6006393800203479,
+     -0.6006393800203479,
+     -0.6006393800203479,
+     -0.6006393800203479,
+     -0.6006393800203479,
+     -0.6006393800203479,
+     -0.6006393800203479,
+     -0.6006393800203479,
+     -0.6006393800203479,
+     -0.6006393800203479,
+     -0.6006393800203479,
+     -0.6006393800203479,
+     -0.6006393800203479,
+     -0.6006393800203479
+    ]
+   }
+  }
+ },
+ "ablations": {
+  "diagnosis_only": {
+   "label": "Single-task: diagnosis only",
+   "test": {
+    "diagnosis_auc": 0.8436061381074169,
+    "global_pathology_mean_auc": 0.5325539434269457,
+    "local_pathology_mean_auc": 0.40398497194382105,
+    "kidney_dice": 0.1270320564508438,
+    "lesion_dice": 0.016143538057804108,
+    "lesion_dice_positive_only": 0.023698393255472183,
+    "consistency_violation_rate": 0.0,
+    "n_lesion_positive": 203,
+    "n_samples": 298
+   }
+  },
+  "kidney_seg_only": {
+   "label": "Single-task: kidney segmentation only",
+   "test": {
+    "diagnosis_auc": 0.5711317135549872,
+    "global_pathology_mean_auc": 0.5353546951422687,
+    "local_pathology_mean_auc": 0.45417531579317605,
+    "kidney_dice": 0.9161553978919983,
+    "lesion_dice": 0.01342551689594984,
+    "lesion_dice_positive_only": 0.01970839686691761,
+    "consistency_violation_rate": 0.0,
+    "n_lesion_positive": 203,
+    "n_samples": 298
+   }
+  },
+  "lesion_seg_only": {
+   "label": "Single-task: lesion segmentation only",
+   "test": {
+    "diagnosis_auc": 0.45732097186700765,
+    "global_pathology_mean_auc": 0.4949030989460928,
+    "local_pathology_mean_auc": 0.47482868707637926,
+    "kidney_dice": 0.09667300432920456,
+    "lesion_dice": 0.3378641605377197,
+    "lesion_dice_positive_only": 0.4959779679775238,
+    "consistency_violation_rate": 0.13277001678943634,
+    "n_lesion_positive": 203,
+    "n_samples": 298
+   }
+  },
+  "weights_only": {
+   "label": "Optimized loss weights, no enhancement",
+   "test": {
+    "diagnosis_auc": 0.8950767263427111,
+    "global_pathology_mean_auc": 0.7520614877276955,
+    "local_pathology_mean_auc": 0.7952555301718939,
+    "kidney_dice": 0.9115149974822998,
+    "lesion_dice": 0.2887629270553589,
+    "lesion_dice_positive_only": 0.42389824986457825,
+    "consistency_violation_rate": 0.07395251840353012,
+    "n_lesion_positive": 203,
+    "n_samples": 298
+   }
+  }
+ }
+}

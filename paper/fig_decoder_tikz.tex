@@ -1,0 +1,130 @@
+%% ---------------------------------------------------------------------------
+%% Figure: internal structure of a single segmentation decoder head
+%%
+%% PREAMBLE:
+%%   \usepackage{tikz}
+%%   \usetikzlibrary{calc,arrows.meta,decorations.pathreplacing}
+%%
+%% The kidney decoder and the lesion decoder are structurally IDENTICAL --
+%% both are built by the same _decoder(in_ch=512) factory and hold 1,572,833
+%% parameters each. They differ only in their learned weights and in the target
+%% they are supervised against. This figure therefore documents one head; see
+%% the combined figure for how the two are wired together.
+%%
+%% Every shape and parameter count was measured by instantiating the module.
+%%
+%% Layout: explicit (x,y) coordinates in cm. Disjoint x-channels:
+%%     panel (a) blocks   x in [0.20, 6.20]
+%%     panel (a) shapes   x in [6.50, 8.90]
+%%     panel (b) detail   x in [9.60, 12.80]
+%% ---------------------------------------------------------------------------
+
+\begin{figure}[t]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[
+  font=\sffamily\footnotesize,
+  blk/.style   = {draw, rounded corners=2pt, minimum width=6.0cm,
+                  minimum height=1.05cm, align=center, inner sep=2pt},
+  io/.style    = {blk, fill=orange!14, draw=orange!75!black},
+  up/.style    = {blk, fill=teal!12,   draw=teal!60!black},
+  fin/.style   = {blk, fill=violet!13, draw=violet!65!black},
+  det/.style   = {draw, rounded corners=2pt, minimum width=3.2cm,
+                  minimum height=0.8cm, align=center, inner sep=2pt,
+                  fill=teal!7, draw=teal!55!black, font=\sffamily\scriptsize},
+  shape/.style = {font=\sffamily\scriptsize, text=black!70, anchor=west},
+  hdr/.style   = {font=\sffamily\small\bfseries, text=black!80},
+  note/.style  = {font=\sffamily\scriptsize, text=black!60, align=left},
+  ar/.style    = {-{Stealth[length=2.4mm]}, semithick, draw=black!65},
+  dash/.style  = {semithick, draw=black!45, dashed}
+]
+
+%% ================= panel (a): the five up-blocks ==========================
+\node[hdr]   at (3.2, 1.15) {(a) Decoder head};
+\node[shape] at (6.5, 1.15) {\bfseries output shape};
+
+\node[io]  (d0) at (3.2,   0.00) {Encoder feature map (shared input)};
+\node[up]  (d1) at (3.2,  -1.45) {Up-block 1 \ \ $512 \rightarrow 256$\\[-1pt]
+                                  {\scriptsize 1{,}180{,}416 parameters}};
+\node[up]  (d2) at (3.2,  -2.90) {Up-block 2 \ \ $256 \rightarrow 128$\\[-1pt]
+                                  {\scriptsize 295{,}296 parameters}};
+\node[up]  (d3) at (3.2,  -4.35) {Up-block 3 \ \ $128 \rightarrow 64$\\[-1pt]
+                                  {\scriptsize 73{,}920 parameters}};
+\node[up]  (d4) at (3.2,  -5.80) {Up-block 4 \ \ $64 \rightarrow 32$\\[-1pt]
+                                  {\scriptsize 18{,}528 parameters}};
+\node[up]  (d5) at (3.2,  -7.25) {Up-block 5 \ \ $32 \rightarrow 16$\\[-1pt]
+                                  {\scriptsize 4{,}656 parameters}};
+\node[fin] (d6) at (3.2,  -8.70) {Conv $1{\times}1$, \ $16 \rightarrow 1$\\[-1pt]
+                                  {\scriptsize 17 parameters \ $\cdot$ \ no
+                                   normalisation, no activation}};
+\node[io]  (d7) at (3.2, -10.15) {Dense logit map (one channel)};
+
+\draw[ar] (d0) -- (d1);
+\draw[ar] (d1) -- (d2);
+\draw[ar] (d2) -- (d3);
+\draw[ar] (d3) -- (d4);
+\draw[ar] (d4) -- (d5);
+\draw[ar] (d5) -- (d6);
+\draw[ar] (d6) -- (d7);
+
+\node[shape] at (6.5,   0.00) {$512 \times 16 \times 16$};
+\node[shape] at (6.5,  -1.45) {$256 \times 32 \times 32$};
+\node[shape] at (6.5,  -2.90) {$128 \times 64 \times 64$};
+\node[shape] at (6.5,  -4.35) {$64 \times 128 \times 128$};
+\node[shape] at (6.5,  -5.80) {$32 \times 256 \times 256$};
+\node[shape] at (6.5,  -7.25) {$16 \times 512 \times 512$};
+\node[shape] at (6.5,  -8.70) {$1 \times 512 \times 512$};
+\node[shape] at (6.5, -10.15) {$512 \times 512$};
+
+%% upsampling brace on the left
+\draw[decorate, decoration={brace, amplitude=5pt, mirror}, black!55]
+      (0.00, -0.925) -- (0.00, -7.775);
+\node[font=\sffamily\scriptsize, text=black!65, rotate=90]
+      at (-0.40, -4.35) {five $2\times$ upsamplings, total $\times 32$};
+
+\node[note, anchor=west, text width=6.2cm] at (0.20, -11.25)
+      {Total 1{,}572{,}833 parameters. The first block alone holds 75\% of them,
+       since it is the only one operating on 512 input channels.};
+
+%% ================= panel (b): inside one up-block =========================
+\node[hdr] at (11.2, 1.15) {(b) Inside one up-block};
+
+\node[det] (u0) at (11.2, -0.20) {input \ $C_{\mathrm{in}} \times H \times W$};
+\node[det] (u1) at (11.2, -1.65) {Conv $3{\times}3$, padding 1\\[-1pt]
+                                  $C_{\mathrm{in}} \rightarrow C_{\mathrm{out}}$};
+\node[det] (u2) at (11.2, -3.10) {BatchNorm2d\\[-1pt] $C_{\mathrm{out}}$ channels};
+\node[det] (u3) at (11.2, -4.55) {ReLU (in-place)};
+\node[det] (u4) at (11.2, -6.00) {Upsample $\times 2$\\[-1pt] bilinear};
+\node[det] (u5) at (11.2, -7.45) {output\\[-1pt]
+                                  $C_{\mathrm{out}} \times 2H \times 2W$};
+
+\draw[ar] (u0) -- (u1);
+\draw[ar] (u1) -- (u2);
+\draw[ar] (u2) -- (u3);
+\draw[ar] (u3) -- (u4);
+\draw[ar] (u4) -- (u5);
+
+\node[note, anchor=west, text width=3.4cm] at (9.60, -8.85)
+      {Convolution halves the channel count; upsampling doubles each spatial
+       dimension. There is no skip connection from the encoder.};
+
+%% connector from panel (a) to panel (b)
+\draw[dash] (6.20, -2.90) -- (8.00, -2.90) -- (8.00, -3.10) -- (9.60, -3.10);
+\node[font=\sffamily\scriptsize, text=black!55] at (7.80, -2.55) {expanded};
+
+\end{tikzpicture}}
+\caption{Internal structure of a single segmentation decoder head.
+\textbf{(a)}~Five successive up-blocks raise the encoder's
+$512{\times}16{\times}16$ feature map back to full input resolution, halving the
+channel count and doubling each spatial dimension at every stage, after which a
+$1{\times}1$ convolution collapses the remaining sixteen channels to one logit
+channel. The output is squeezed to $512{\times}512$ and carries raw logits; the
+logistic function is applied by the loss and by the evaluation code rather than
+inside the module. \textbf{(b)}~Each up-block is a $3{\times}3$ convolution with
+padding one, batch normalisation, a ReLU activation and bilinear upsampling by a
+factor of two. The design is deliberately plain: there are no skip connections
+from the encoder, so the decoder must recover spatial detail from the
+$16{\times}16$ bottleneck alone. The kidney and lesion decoders are structurally
+identical instances of this head and hold 1,572,833 parameters each, differing
+only in their learned weights and supervision target.}\label{fig:decoder}
+\end{figure}
